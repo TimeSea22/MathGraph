@@ -1,5 +1,4 @@
 import os
-import unittest
 import ast
 
 class File:
@@ -97,7 +96,9 @@ class MathGraph:
     def read(self, name):
         f = File(name)
         t = f.read()
-        f.dict1 = ast.literal_eval(t[0])
-        f.dict2 = ast.literal_eval(t[1])
-        f.connection = list(eval(t[2]))
-        f.vertexNum = len(f.dict1)
+        g = g.MathGraph()
+        g.dict1 = ast.literal_eval(t[0])
+        g.dict2 = ast.literal_eval(t[1])
+        g.connection = list(eval(t[2]))
+        g.vertexNum = len(g.dict1)
+        return g
