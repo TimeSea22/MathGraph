@@ -1,5 +1,6 @@
 import os
 import unittest
+import ast
 
 class File:
     def __init__(self, name):
@@ -89,64 +90,14 @@ class MathGraph:
             vSet.update(self.exists_path_to(n))
         return vSet
 
-class TestFile(unittest.TestCase):
+    def save(self, name):
+        f = File(name)
+        f.edit(f'{self.dict1}\n{self.dict2}\n{self.connection}')
 
-    def test_create1(self):
-        f = File('123.txt')
-        f.create()
-        self.assertTrue(os.path.exists('123.txt'))
-     
-    
-    def test_create2(self):
-        f = File('123.txt')
-        f.create()
-        f.create()
-        self.assertTrue(os.path.exists('123.txt'))
-        
-    
-    def test_delete1(self):
-        f = File('123.txt')
-        f.create()
-        f.delete()
-        self.assertFalse(os.path.exists('123.txt'))
-        
-    def test_delete2(self):
-        f = File('123.txt')
-        f.delete()
-        self.assertFalse(os.path.exists('123.txt'))
-        
-    def test_edit1(self):
-        f = File('123.txt')
-        f.edit('123')
-        r = f.read()
-        self.assertEqual(['123'], r)
-    
-    def test_rename1(self):
-        f = File('123.txt')
-        f.create()
-        f.rename('456.txt')
-        self.assertTrue(os.path.exists('456.txt'))
-      
-    def test_rename2(self):
-        f = File('abc.txt')
-        f.create()
-        f.rename('abc.txt')
-        self.assertTrue(os.path.exists('abc.txt'))
-      
-    def test_rename3(self):
-        f = File('789.txt')
-        f.rename('789.txt')
-        self.assertTrue(os.path.exists('789.txt'))
-    
-    def test_read1(self):
-        f = File('789.txt')
-        f.edit('qwerty\nuiopas\ndfggh\nzkdjfhgr')
+    def read(self, name):
+        f = File(name)
         t = f.read()
-        self.assertEqual(t,['qwerty\n','uiopas\n','dfggh\n','zkdjfhgr'])
-        
-    def test_read2(self):
-        f = File('sdf.txt')
-        self.assertRaisesRegex(Exception, '文件不存在', f.read)
-      
-if __name__ == '__main__':
-    unittest.main()
+        f.dict1 = ast.literal_eval(t[0])
+        f.dict2 = ast.literal_eval(t[1])
+        f.connection = list(eval(t[2]))
+        f.vertexNum = len(f.dict1)
