@@ -190,12 +190,27 @@ while True:
             print('edge不存在')
         continue
 
-    '''if action == 'deletevertex':
-        file = MathGraph()
-        if string in file.dict2:
-            file.dict1.pop(file.dict2[string])
-            del file.connection[file.dict2[string]]
-            if file.dict2[string] in '''
+   if action == 'deletevertex':
+        string = input('请输入您的边名或者节点名：')
+        if string in g.dict2:
+            del g.connection[g.dict2[string]]
+            for m in range(len(g.connection)):
+                for n in g.connection[m]:
+                    if g.dict2[string] in g.connection[m]:
+                        g.connection[m].remove(g.dict2[string])
+            g.dict1.pop(g.dict2[string])
+            print(g.dict1)
+            l1 = g.dict1.values()
+            print(l1)
+            l2 = list(range(len(g.dict1)))
+            print(l2)
+            g.dict1 = dict(zip(l2,l1))
+            print(g.dict1)
+            g.dict2 = dict(zip(l1,l2))
+            print(g.dict2)
+        else:
+            print('vertex不存在')
+        continue
 
     if action == 'searchvertex':
         fileName = input('请输入您的文件名：')
