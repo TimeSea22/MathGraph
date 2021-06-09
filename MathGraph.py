@@ -140,18 +140,6 @@ print(g.exists_path_to(0))
 f = MathGraph()
 f.read('a.txt')'''
 
-'''if __name__ == '__main__':
-    g = MathGraph()
-    g.read(args.read)
-    g.save(args.save)'''
-
-'''while True:
-    action = input('请输入您的操作：')
-    if action in args:
-        break
-    else:
-        print('您的操作不存在，请重新输入')'''
-
 while True:
     action = input('请输入您的操作：')
     if action == 'read':
