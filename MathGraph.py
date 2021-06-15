@@ -1,6 +1,9 @@
 import os
 import ast
 import argparse
+from graphviz import Digraph
+
+os.environ["PATH"] += os.pathsep + 'C:/Program Files/Graphviz/bin/'
 '''import pdb
 
 pdb.set_trace()'''
@@ -83,6 +86,7 @@ class MathGraph:
             self.dict1[self.vertexNum] = key
             self.dict2[key] = self.vertexNum
             self.connection.append([])
+            dot.node(key[0], key)
             self.vertexNum += 1
 
 
@@ -95,6 +99,7 @@ class MathGraph:
             print('存在循环，无法添加')
             return
         self.connection[self.dict2[f]].append(self.dict2[g])
+        dot.edges([f + g])
         
 
     def neighbors(self, v):  
@@ -109,6 +114,9 @@ class MathGraph:
     def save(self, name):
         f = File(name)
         f.edit(f'{self.dict1}\n{self.dict2}\n{self.connection}')
+        g = MathGraph()
+        g.turn(name)
+        dot.render(name + '.gv', view = True)
 
     def read(self, name):
         f = File(name)
@@ -123,6 +131,16 @@ class MathGraph:
             self.dict2 = ast.literal_eval(t[1])
             self.connection = list(eval(t[2]))
             self.vertexNum = len(self.dict1)
+           
+    def turn(self,name):
+        f = MathGraph()
+        t = f.read(name)
+        for n in self.dict2:
+            dot.node(n[0], n)
+        for m in range(len(self.connection)):
+            for n in self.connection[m]:
+                dot.edges([self.dict1[m][0] + self.dict1[n][0]])
+        dot.render(name + '.gv', view = True)
 
 
 '''g = MathGraph()
@@ -147,6 +165,7 @@ while True:
         g = MathGraph()
         print (fileName)
         g.read(fileName)
+        g.return(fileName)
         continue
 
     if action == 'save':
