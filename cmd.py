@@ -2,6 +2,7 @@ import os
 import argparse
 from MathGraph import MathGraph
 from File import File
+from path import path
 
 os.environ["PATH"] += os.pathsep + 'C:/Program Files/Graphviz/bin/'
 
@@ -28,6 +29,7 @@ while True:
         print (fileName)
         g.read(fileName)
         g.turn(fileName)
+        print(path(g))
         continue
 
     if action == 'save':
